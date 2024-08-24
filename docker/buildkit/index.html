@@ -249,7 +249,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>2.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -283,7 +283,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@devops:~/data# ctr -n buildkit i <span class="built_in">ls</span></span><br><span class="line">REF                                         TYPE                                                 DIGEST                                                                  SIZE     PLATFORMS   LABELS</span><br><span class="line">dockerhub.qingcloud.com/doubao/nginx:doubao application/vnd.docker.distribution.manifest.v2+json sha256:1fee4f91e595af322b8aaf7b3d74a1de6de0e12798097631b1e2fc063a3818dc 67.7 MiB linux/amd64 -</span><br><span class="line">root@devops:~/data#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>推送到远程仓库里面</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@devops:~/data# ctr -n buildkit i push -u username:passworld dockerhub.qingcloud.com/doubao/nginx:doubao</span><br><span class="line">manifest-sha256:1fee4f91e595af322b8aaf7b3d74a1de6de0e12798097631b1e2fc063a3818dc: <span class="keyword">done</span>           |++++++++++++++++++++++++++++++++++++++|</span><br><span class="line">config-sha256:70fddb68d1e838d671f94e3c579b75e81d6e4717fc25e3c8decec405cf3b7f67:   <span class="keyword">done</span>           |++++++++++++++++++++++++++++++++++++++|</span><br><span class="line">elapsed: 2.4 s                                                                    total:  8.9 Ki (3.7 KiB/s)</span><br><span class="line">root@devops:~/data#</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@devops:~/data# ctr -n buildkit i push -u username:password dockerhub.qingcloud.com/doubao/nginx:doubao</span><br><span class="line">manifest-sha256:1fee4f91e595af322b8aaf7b3d74a1de6de0e12798097631b1e2fc063a3818dc: <span class="keyword">done</span>           |++++++++++++++++++++++++++++++++++++++|</span><br><span class="line">config-sha256:70fddb68d1e838d671f94e3c579b75e81d6e4717fc25e3c8decec405cf3b7f67:   <span class="keyword">done</span>           |++++++++++++++++++++++++++++++++++++++|</span><br><span class="line">elapsed: 2.4 s                                                                    total:  8.9 Ki (3.7 KiB/s)</span><br><span class="line">root@devops:~/data#</span><br></pre></td></tr></table></figure>
 
     </div>
 
