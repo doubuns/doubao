@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/qpp.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/qpp.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/qpp.png">
+  <link rel="mask-icon" href="/images/qpp.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"dooubb.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OCI (Open Container Initiative)OCI（Open Container Initiative）即开放的容器运行时规范，目的在于定义一个容器运行时及镜像的相关标准和规范，其中包括  runtime-spec：容器的生命周期管理，具体参考runtime-spec。 image-spec：镜像的生命周期管理，具体参考image-spec。  实现 OCI 标准的容器运行时有r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker containerd runc">
+<meta property="og:url" content="https://dooubb.github.io/docker/docker-containerd-runc/index.html">
+<meta property="og:site_name" content="doubao">
+<meta property="og:description" content="OCI (Open Container Initiative)OCI（Open Container Initiative）即开放的容器运行时规范，目的在于定义一个容器运行时及镜像的相关标准和规范，其中包括  runtime-spec：容器的生命周期管理，具体参考runtime-spec。 image-spec：镜像的生命周期管理，具体参考image-spec。  实现 OCI 标准的容器运行时有r">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dooubb.github.io/docker/docker-containerd-runc/image-20240818154100206.png">
+<meta property="og:image" content="https://dooubb.github.io/docker/docker-containerd-runc/image-20240818151314490.png">
+<meta property="og:image" content="https://dooubb.github.io/docker/docker-containerd-runc/image-20240818154926633.png">
+<meta property="article:published_time" content="2024-08-24T13:40:00.000Z">
+<meta property="article:modified_time" content="2024-08-23T16:00:00.000Z">
+<meta property="article:author" content="doubao">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dooubb.github.io/docker/docker-containerd-runc/image-20240818154100206.png">
+
+
+<link rel="canonical" href="https://dooubb.github.io/docker/docker-containerd-runc/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dooubb.github.io/docker/docker-containerd-runc/","path":"docker/docker-containerd-runc/","title":"docker containerd runc"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>docker containerd runc | doubao</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">doubao</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OCI-Open-Container-Initiative"><span class="nav-number">1.</span> <span class="nav-text">OCI (Open Container Initiative)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CRI-Container-Runtime-Interface"><span class="nav-number">2.</span> <span class="nav-text">CRI (Container Runtime Interface)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Containerd"><span class="nav-number">3.</span> <span class="nav-text">Containerd</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#containerd-%E6%94%AF%E6%8C%81%E7%9A%84-shim%EF%BC%9F"><span class="nav-number">3.1.</span> <span class="nav-text">containerd 支持的 shim？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#io-containerd-runtime-v1-linux"><span class="nav-number">3.1.1.</span> <span class="nav-text">io.containerd.runtime.v1.linux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#io-containerd-runc-v1"><span class="nav-number">3.1.2.</span> <span class="nav-text">io.containerd.runc.v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#io-containerd-runc-v2"><span class="nav-number">3.1.3.</span> <span class="nav-text">io.containerd.runc.v2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#io-containerd-runhcs-v1"><span class="nav-number">3.1.4.</span> <span class="nav-text">io.containerd.runhcs.v1</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CRI-O"><span class="nav-number">4.</span> <span class="nav-text">CRI-O</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RunC"><span class="nav-number">5.</span> <span class="nav-text">RunC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker"><span class="nav-number">6.</span> <span class="nav-text">Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-%E5%92%8C-k8s-%E7%AE%A1%E7%90%86%E5%AE%B9%E5%99%A8%E7%9A%84%E5%85%B3%E7%B3%BB%E5%9B%BE"><span class="nav-number">7.</span> <span class="nav-text">docker 和 k8s 管理容器的关系图</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">doubao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dooubb" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dooubb" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/docker/docker-containerd-runc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doubao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doubao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="docker containerd runc | doubao">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          docker containerd runc
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-24 21:40:00" itemprop="dateCreated datePublished" datetime="2024-08-24T21:40:00+08:00">2024-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-24 00:00:00" itemprop="dateModified" datetime="2024-08-24T00:00:00+08:00">2024-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        
+          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="OCI-Open-Container-Initiative"><a href="#OCI-Open-Container-Initiative" class="headerlink" title="OCI (Open Container Initiative)"></a>OCI (Open Container Initiative)</h1><p>OCI（Open Container Initiative）即开放的容器运行时<strong>规范</strong>，目的在于定义一个容器运行时及镜像的相关标准和规范，其中包括</p>
+<ul>
+<li>runtime-spec：容器的生命周期管理，具体参考<a target="_blank" rel="noopener" href="https://github.com/opencontainers/runtime-spec/blob/master/runtime.md">runtime-spec</a>。</li>
+<li>image-spec：镜像的生命周期管理，具体参考<a target="_blank" rel="noopener" href="https://github.com/opencontainers/image-spec/blob/main/spec.md">image-spec</a>。</li>
+</ul>
+<p>实现 OCI 标准的容器运行时有<code>runc</code>，<code>kata</code>等。</p>
+<h1 id="CRI-Container-Runtime-Interface"><a href="#CRI-Container-Runtime-Interface" class="headerlink" title="CRI (Container Runtime Interface)"></a>CRI (Container Runtime Interface)</h1><p><strong>CRI 即容器运行时接口，主要用来定义 k8s 与容器运行时的 API 调用</strong>，kubelet 通过 CRI 来调用容器运行时，只要实现了 CRI 接口的容器运行时就可以对接到 k8s 的 kubelet 组件。</p>
+<p><img src="/docker/docker-containerd-runc/image-20240818154100206.png" alt="image-20240818154100206"></p>
+<span id="more"></span>
+
+<h1 id="Containerd"><a href="#Containerd" class="headerlink" title="Containerd"></a>Containerd</h1><p><a target="_blank" rel="noopener" href="https://github.com/containerd/containerd">containerd</a> 是一个开源的容器运行时，可以管理和运行容器，是 Docker 默认使用的容器运行时，并实现了 CRI 规范。<br>containerd 通过其 CRI 插件实现了 Kubernetes 容器运行时接口（CRI），它可以管理容器的整个生命周期，包括从镜像的传输、存储到容器的执行、监控再到网络。</p>
+<h2 id="containerd-支持的-shim？"><a href="#containerd-支持的-shim？" class="headerlink" title="containerd 支持的 shim？"></a>containerd 支持的 shim？</h2><p>shim：垫片，一般用来表示对第三方组件 API 调用的适配插件，例如 k8s 使用 Dockershim 来实现对 docker 接口的适配调用。<br>Containerd 目前官方支持的 shim 清单：</p>
+<h3 id="io-containerd-runtime-v1-linux"><a href="#io-containerd-runtime-v1-linux" class="headerlink" title="io.containerd.runtime.v1.linux"></a>io.containerd.runtime.v1.linux</h3><p><code>io.containerd.runtime.v1.linux</code> 是最原始的 shim API 和实现的 v1 版本，在 Containerd 1.0 之前被设计出来。该 shim 使用 <code>runc</code> 来执行容器，并且只支持 <code>cgroup v1</code>。目前 v1 版 shim API 已被废弃，并将于 Containerd 2.0 被删除。</p>
+<h3 id="io-containerd-runc-v1"><a href="#io-containerd-runc-v1" class="headerlink" title="io.containerd.runc.v1"></a>io.containerd.runc.v1</h3><p><code>io.containerd.runc.v1</code> 与 <code>io.containerd.runtime.v1.linux</code> 的实现类似，唯一的区别是它使用了 v2 版本 shim API。该 shim 仍然只支持 cgroup v1。</p>
+<h3 id="io-containerd-runc-v2"><a href="#io-containerd-runc-v2" class="headerlink" title="io.containerd.runc.v2"></a>io.containerd.runc.v2</h3><p>该 shim 与 <strong>v1</strong> 采用了完全不同的实现，并且使用了 v2 版本 shim API，同时支持 cgroup v1 和 v2。该 shim 进程以运行多个容器，用于 Kubernetes 的 CRI 实现，可以在一个 Pod 中运行多个容器。</p>
+<h3 id="io-containerd-runhcs-v1"><a href="#io-containerd-runhcs-v1" class="headerlink" title="io.containerd.runhcs.v1"></a>io.containerd.runhcs.v1</h3><p>这是 Windows 平台的 shim，使用 Window 的 <code>HCSv2 API</code> 来管理容器。</p>
+<h1 id="CRI-O"><a href="#CRI-O" class="headerlink" title="CRI-O"></a>CRI-O</h1><p>CRI-O 是另一个实现了容器运行时接口（CRI）的高级别容器运行时，可以使用 OCI（开放容器倡议）兼容的运行时，它是 containerd 的一个替代品。<br>CRI-O 诞生于 RedHat、IBM、英特尔、SUSE、Hyper 等公司。它是专门从头开始创建的，作为 Kubernetes 的一个容器运行时，它提供了启动、停止和重启容器的能力，就像 containerd 一样。</p>
+<h1 id="RunC"><a href="#RunC" class="headerlink" title="RunC"></a>RunC</h1><p><a target="_blank" rel="noopener" href="https://github.com/opencontainers/runc">runc(run container)</a>是一个基于 OCI 标准实现的一个轻量级容器运行工具，用来创建和运行容器。而 Containerd 是用来维持通过 runc 创建的容器的运行状态。即 runc 用来创建和运行容器，containerd 作为常驻进程用来管理容器。<br>runc 包含 libcontainer，包括对 namespace 和 cgroup 的调用操作。<br>安装 docker 后，会自动安装 runc，linux 上可以直接运行 runc 命令。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">root@devops:/usr/bin# runc</span><br><span class="line">NAME:</span><br><span class="line">   runc - Open Container Initiative runtime</span><br><span class="line"></span><br><span class="line">runc is a <span class="built_in">command</span> line client <span class="keyword">for</span> running applications packaged according to</span><br><span class="line">the Open Container Initiative (OCI) format and is a compliant implementation of the</span><br><span class="line">Open Container Initiative specification.</span><br><span class="line"></span><br><span class="line">runc integrates well with existing process supervisors to provide a production</span><br><span class="line">container runtime environment <span class="keyword">for</span> applications. It can be used with your</span><br><span class="line">existing process monitoring tools and the container will be spawned as a</span><br><span class="line">direct child of the process supervisor.</span><br><span class="line"></span><br><span class="line">Containers are configured using bundles. A bundle <span class="keyword">for</span> a container is a directory</span><br><span class="line">that includes a specification file named <span class="string">&quot;config.json&quot;</span> and a root filesystem.</span><br><span class="line">The root filesystem contains the contents of the container.</span><br><span class="line"></span><br><span class="line">To start a new instance of a container:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># runc run [ -b bundle ] &lt;container-id&gt;</span></span><br><span class="line"></span><br><span class="line">Where <span class="string">&quot;&lt;container-id&gt;&quot;</span> is your name <span class="keyword">for</span> the instance of the container that you</span><br><span class="line">are starting. The name you provide <span class="keyword">for</span> the container instance must be unique on</span><br><span class="line">your host. Providing the bundle directory using <span class="string">&quot;-b&quot;</span> is optional. The default</span><br><span class="line">value <span class="keyword">for</span> <span class="string">&quot;bundle&quot;</span> is the current directory.</span><br><span class="line"></span><br><span class="line">USAGE:</span><br><span class="line">   runc [global options] <span class="built_in">command</span> [<span class="built_in">command</span> options] [arguments...]</span><br><span class="line"></span><br><span class="line">VERSION:</span><br><span class="line">   1.7.19</span><br><span class="line">commit: v1.1.13-0-g58aa920</span><br><span class="line">spec: 1.0.2-dev</span><br><span class="line">go: go1.21.12</span><br><span class="line">libseccomp: 2.5.5</span><br><span class="line"></span><br><span class="line">COMMANDS:</span><br><span class="line">   checkpoint  checkpoint a running container</span><br><span class="line">   create      create a container</span><br><span class="line">   delete      delete any resources held by the container often used with detached container</span><br><span class="line">   events      display container events such as OOM notifications, cpu, memory, and IO usage statistics</span><br><span class="line">   <span class="built_in">exec</span>        execute new process inside the container</span><br><span class="line">   <span class="built_in">kill</span>        <span class="built_in">kill</span> sends the specified signal (default: SIGTERM) to the container<span class="string">&#x27;s init process</span></span><br><span class="line"><span class="string">   list        lists containers started by runc with the given root</span></span><br><span class="line"><span class="string">   pause       pause suspends all processes inside the container</span></span><br><span class="line"><span class="string">   ps          ps displays the processes running inside a container</span></span><br><span class="line"><span class="string">   restore     restore a container from a previous checkpoint</span></span><br><span class="line"><span class="string">   resume      resumes all processes that have been previously paused</span></span><br><span class="line"><span class="string">   run         create and run a container</span></span><br><span class="line"><span class="string">   spec        create a new specification file</span></span><br><span class="line"><span class="string">   start       executes the user defined process in a created container</span></span><br><span class="line"><span class="string">   state       output the state of a container</span></span><br><span class="line"><span class="string">   update      update container resource constraints</span></span><br><span class="line"><span class="string">   features    show the enabled features</span></span><br><span class="line"><span class="string">   help, h     Shows a list of commands or help for one command</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">GLOBAL OPTIONS:</span></span><br><span class="line"><span class="string">   --debug             enable debug logging</span></span><br><span class="line"><span class="string">   --log value         set the log file to write runc logs to (default is &#x27;</span>/dev/stderr<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">   --log-format value  set the log format (&#x27;</span>text<span class="string">&#x27; (default), or &#x27;</span>json<span class="string">&#x27;) (default: &quot;text&quot;)</span></span><br><span class="line"><span class="string">   --root value        root directory for storage of container state (this should be located in tmpfs) (default: &quot;/run/runc&quot;)</span></span><br><span class="line"><span class="string">   --criu value        path to the criu binary used for checkpoint and restore (default: &quot;criu&quot;)</span></span><br><span class="line"><span class="string">   --systemd-cgroup    enable systemd cgroup support, expects cgroupsPath to be of form &quot;slice:prefix:name&quot; for e.g. &quot;system.slice:runc:434234&quot;</span></span><br><span class="line"><span class="string">   --rootless value    ignore cgroup permission errors (&#x27;</span><span class="literal">true</span><span class="string">&#x27;, &#x27;</span><span class="literal">false</span><span class="string">&#x27;, or &#x27;</span>auto<span class="string">&#x27;) (default: &quot;auto&quot;)</span></span><br><span class="line"><span class="string">   --help, -h          show help</span></span><br><span class="line"><span class="string">   --version, -v       print the version</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><p>从 Docker 1.11 版本开始，Docker 容器运行就不是简单通过 Docker Daemon 来启动了，而是通过集成 <a target="_blank" rel="noopener" href="https://www.docker.com/blog/docker-engine-1-11-runc/">containerd、runc</a> 等多个组件来完成的。</p>
+<p><img src="/docker/docker-containerd-runc/image-20240818151314490.png" alt="image-20240818151314490"></p>
+<!--more-->
+
+<p>每一个 Containerd 或 Docker 容器都有一个相应的 shim 守护进程，这个守护进程会提供一个 API，Containerd 使用该 API 来管理容器基本的生命周期（启动&#x2F;停止）。shim 还有一个作用是向 Containerd 报告容器的退出状态，在容器退出状态被 Containerd 收集之前，shim 会一直存在。这一点和僵尸进程很像，僵尸进程在被父进程回收之前会一直存在，只不过僵尸进程不会占用资源，而 shim 会占用资源。</p>
+<p>shim 将 Containerd 进程从容器的生命周期中分离出来，具体的做法是 runc 在创建和运行容器之后退出，并将 shim 作为容器的父进程，即使 Containerd 进程挂掉或者重启，也不会对容器造成任何影响。这样做的好处，可以在线升级或者重启 Containerd，不会对运行中的容器产生任何影响。Docker 的 <a href="https://icloudnative.io/go/?target=aHR0cHM6Ly9kb2NzLmRvY2tlci5jb20vY29uZmlnL2NvbnRhaW5lcnMvbGl2ZS1yZXN0b3JlLw==">–live-restore</a> 特征也实现了类似的功能。</p>
+<h1 id="docker-和-k8s-管理容器的关系图"><a href="#docker-和-k8s-管理容器的关系图" class="headerlink" title="docker 和 k8s 管理容器的关系图"></a>docker 和 k8s 管理容器的关系图</h1><p>关系流程如下</p>
+<ul>
+<li><p>Docker，Kubernetes 等工具来运行一个容器时会调用容器运行时（CRI）比如 containerd，CRI-O</p>
+</li>
+<li><p>通过容器运行时来完成容器的创建、运行、销毁等实际工作</p>
+</li>
+<li><p>Docker 使用的是 containerd 作为其运行时；Kubernetes 支持 containerd，CRI-O 等多种容器运行时</p>
+</li>
+<li><p>这些容器运行时都遵循了 OCI 规范，并通过 runc 来实现与操作系统内核交互来完成容器的创建和运行</p>
+</li>
+</ul>
+<p><img src="/docker/docker-containerd-runc/image-20240818154926633.png" alt="image-20240818154926633"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"># docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/next-enable-fancybox/" rel="prev" title="next启用fancybox">
+                  <i class="fa fa-angle-left"></i> next启用fancybox
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">doubao</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
