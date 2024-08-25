@@ -147,7 +147,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -187,7 +187,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/argo/argocd-install/">
+    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/argo/argo-workflows-quick-start/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -205,7 +205,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/argo/argocd-install/" class="post-title-link" itemprop="url">安装argo cd</a>
+          <a href="/argo/argo-workflows-quick-start/" class="post-title-link" itemprop="url">argo workflows quick start</a>
         </h2>
 
         <div class="post-meta-container">
@@ -216,7 +216,122 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-08-25 12:12:00" itemprop="dateCreated datePublished" datetime="2024-08-25T12:12:00+08:00">2024-08-25</time>
+      <time title="创建时间：2024-08-25 20:10:00" itemprop="dateCreated datePublished" datetime="2024-08-25T20:10:00+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-25 20:10:00" itemprop="dateModified" datetime="2024-08-25T20:10:00+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        
+          <a href="/categories/argo/" itemprop="url" rel="index"><span itemprop="name">argo</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><p>新建命名空间并部署项目资源</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create namespace argo</span><br><span class="line">kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.5.10/install.yaml</span><br></pre></td></tr></table></figure>
+
+<h2 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h2><p>默认情况下， argo workflows 服务不对外暴露服务，可以通过 LoadBalancer 或者 NodePort 类型的 Service、Ingress、Kubectl 端口转发等方式将 argo workflows 服务发布到 Kubernetes 集群外部。</p>
+<p>由于是 vm 自建，所以选择使用 NodePort 的方式暴露服务。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl patch svc argo-server -n argo -p <span class="string">&#x27;&#123;&quot;spec&quot;: &#123;&quot;type&quot;: &quot;NodePort&quot;&#125;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>查看随机暴露的端口</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@devops:~# kubectl get svc -n argo</span><br><span class="line">NAME          TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE</span><br><span class="line">argo-server   NodePort   10.43.35.195   &lt;none&gt;        2746:30701/TCP   4m28s</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/argo/argo-workflows-quick-start/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/argo/sealed-secrets-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doubao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doubao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | doubao">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/argo/sealed-secrets-install/" class="post-title-link" itemprop="url">sealed-secrets</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-25 19:40:00" itemprop="dateCreated datePublished" datetime="2024-08-25T19:40:00+08:00">2024-08-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -242,233 +357,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><p>新建命名空间并部署项目资源</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create namespace argocd</span><br><span class="line">kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml</span><br></pre></td></tr></table></figure>
-
-<h2 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h2><p>默认情况下， Argo CD 服务不对外暴露服务，可以通过 LoadBalancer 或者 NodePort 类型的 Service、Ingress、Kubectl 端口转发等方式将 Argo CD 服务发布到 Kubernetes 集群外部。</p>
-<p>由于是 vm 自建，所以选择使用 NodePort 的方式暴露服务。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl patch svc argocd-server -n argocd -p <span class="string">&#x27;&#123;&quot;spec&quot;: &#123;&quot;type&quot;: &quot;NodePort&quot;&#125;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>查看随机暴露的端口</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@devops:~# kubectl get svc -n argocd</span><br><span class="line">NAME                                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE</span><br><span class="line">argocd-applicationset-controller          ClusterIP   10.43.49.182    &lt;none&gt;        7000/TCP,8080/TCP            78m</span><br><span class="line">argocd-dex-server                         ClusterIP   10.43.155.32    &lt;none&gt;        5556/TCP,5557/TCP,5558/TCP   78m</span><br><span class="line">argocd-metrics                            ClusterIP   10.43.241.106   &lt;none&gt;        8082/TCP                     78m</span><br><span class="line">argocd-notifications-controller-metrics   ClusterIP   10.43.239.240   &lt;none&gt;        9001/TCP                     78m</span><br><span class="line">argocd-redis                              ClusterIP   10.43.37.52     &lt;none&gt;        6379/TCP                     78m</span><br><span class="line">argocd-repo-server                        ClusterIP   10.43.79.21     &lt;none&gt;        8081/TCP,8084/TCP            78m</span><br><span class="line">argocd-server                             NodePort    10.43.65.157    &lt;none&gt;        80:32221/TCP,443:31046/TCP   78m</span><br><span class="line">argocd-server-metrics                     ClusterIP   10.43.235.50    &lt;none&gt;        8083/TCP                     78m</span><br><span class="line">root@devops:~#</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/argo/argocd-install/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/k8s/rancher-install-mini-k8s/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/k8s/rancher-install-mini-k8s/" class="post-title-link" itemprop="url">rancher管理k8s</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-25 12:00:00" itemprop="dateCreated datePublished" datetime="2024-08-25T12:00:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-25 00:00:00" itemprop="dateModified" datetime="2024-08-25T00:00:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        
-          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="初始化-rke2-集群"><a href="#初始化-rke2-集群" class="headerlink" title="初始化 rke2 集群"></a>初始化 rke2 集群</h1><h2 id="新建-4-台-Ubuntu24"><a href="#新建-4-台-Ubuntu24" class="headerlink" title="新建 4 台 Ubuntu24"></a>新建 4 台 Ubuntu24</h2><p>设置每台 vm 的 hostname</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname master-node</span><br><span class="line">hostnamectl set-hostname worker-node-01</span><br><span class="line">hostnamectl set-hostname worker-node-02</span><br><span class="line">hostnamectl set-hostname devops</span><br></pre></td></tr></table></figure>
-
-<p>由于 vm 是复制出来的，需要重新生成机器码并重启</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf /etc/machine-id</span><br><span class="line">systemd-machine-id-setup</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/k8s/rancher-install-mini-k8s/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/mysql/mysql8-master-slave-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/mysql/mysql8-master-slave-install/" class="post-title-link" itemprop="url">mysql主从</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-24 22:20:00" itemprop="dateCreated datePublished" datetime="2024-08-24T22:20:00+08:00">2024-08-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-24 00:00:00" itemprop="dateModified" datetime="2024-08-24T00:00:00+08:00">2024-08-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        
-          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.2k</span>
+      <span>5.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -486,11 +375,125 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="mysql-高可用"><a href="#mysql-高可用" class="headerlink" title="mysql 高可用"></a>mysql 高可用</h1><p>使用 docker compose 部署主从 mysql 的主从架构</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mysql-master:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dockerhub.qingcloud.com/doubao/mysql:8.0.39</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">mysql-master</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">root</span></span><br><span class="line">      <span class="attr">MYSQL_USER:</span> <span class="string">app</span></span><br><span class="line">      <span class="attr">MYSQL_PASSWORD:</span> <span class="string">app</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3306:3306&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./master/data:/var/lib/mysql</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./master/config/my.cnf:/etc/mysql/my.cnf</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./master/logs:/var/log/mysql</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql-cluster</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">mysql-slave:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dockerhub.qingcloud.com/doubao/mysql:8.0.39</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">mysql-slave</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3307:3306&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./slave/data:/var/lib/mysql</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./slave/config/my.cnf:/etc/mysql/my.cnf</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./slave/logs:/var/log/mysql</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql-master</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">mysql-cluster</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">mysql-cluster:</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
+          <h1 id="安装-Controller"><a href="#安装-Controller" class="headerlink" title="安装 Controller"></a>安装 Controller</h1><p>部署项目资源</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.0/controller.yaml</span><br></pre></td></tr></table></figure>
+
+<h1 id="安装二进制命令"><a href="#安装二进制命令" class="headerlink" title="安装二进制命令"></a>安装二进制命令</h1><p>安装目前最新版本<code>0.27.1</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KUBESEAL_VERSION=<span class="string">&#x27;0.27.1&#x27;</span> <span class="comment"># Set this to, for example, KUBESEAL_VERSION=&#x27;0.23.0&#x27;</span></span><br><span class="line">curl -OL <span class="string">&quot;https://github.com/bitnami-labs/sealed-secrets/releases/download/v<span class="variable">$&#123;KUBESEAL_VERSION:?&#125;</span>/kubeseal-<span class="variable">$&#123;KUBESEAL_VERSION:?&#125;</span>-linux-amd64.tar.gz&quot;</span></span><br><span class="line">tar -xvzf kubeseal-<span class="variable">$&#123;KUBESEAL_VERSION:?&#125;</span>-linux-amd64.tar.gz kubeseal</span><br><span class="line"><span class="built_in">sudo</span> install -m 755 kubeseal /usr/local/bin/kubeseal</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/mysql/mysql8-master-slave-install/#more" rel="contents">
+              <a class="btn" href="/argo/sealed-secrets-install/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/tools/tree-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doubao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doubao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | doubao">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tools/tree-tools/" class="post-title-link" itemprop="url">tree</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-25 19:07:00" itemprop="dateCreated datePublished" datetime="2024-08-25T19:07:00+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-25 00:00:00" itemprop="dateModified" datetime="2024-08-25T00:00:00+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        
+          <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="windows-下直接使用-tree"><a href="#windows-下直接使用-tree" class="headerlink" title="windows 下直接使用 tree"></a>windows 下直接使用 tree</h1><p><code>tree</code>可以显示目录结构，windows 下在 cmd 中可以直接使用，但是显示会有点瑕疵，不会直接显示子级目录前面的<code>---</code></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tree</span> /F /A</span><br><span class="line"></span><br><span class="line">+---base</span><br><span class="line">|   +---config</span><br><span class="line">|   |       config.yaml</span><br><span class="line">|   |       kustomization.yaml</span><br><span class="line">|   |</span><br><span class="line">|   +---nginx</span><br><span class="line">|   |       hpa.yaml</span><br><span class="line">|   |       kustomization.yaml</span><br><span class="line">|   |       nginx.yaml</span><br><span class="line">|   |</span><br><span class="line">|   \---redis</span><br><span class="line">|           hpa.yaml</span><br><span class="line">|           kustomization.yaml</span><br><span class="line">|           redis.yaml</span><br></pre></td></tr></table></figure>
+
+<h1 id="git-中安装-tree-for-windows"><a href="#git-中安装-tree-for-windows" class="headerlink" title="git 中安装 tree for windows"></a>git 中安装 tree for windows</h1><p><a target="_blank" rel="noopener" href="https://gnuwin32.sourceforge.net/packages/tree.html">tree for windows</a>安装包。下载 Binaries，解压后将<code>tree.exe</code>复制到 git 的安装目录中的<code>D:\develop\Git\usr\bin</code>，新建 git bash</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tree -C -A</span><br><span class="line"></span><br><span class="line">├── config</span><br><span class="line">│   ├── config.yaml</span><br><span class="line">│   └── kustomization.yaml</span><br><span class="line">├── nginx</span><br><span class="line">│   ├── hpa.yaml</span><br><span class="line">│   ├── kustomization.yaml</span><br><span class="line">│   └── nginx.yaml</span><br><span class="line">└── redis</span><br><span class="line">    ├── hpa.yaml</span><br><span class="line">    ├── kustomization.yaml</span><br><span class="line">    └── redis.yaml</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tools/tree-tools/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -514,7 +517,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

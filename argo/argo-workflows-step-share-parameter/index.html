@@ -20,23 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dooubb.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="doubao">
-<meta property="og:url" content="https://dooubb.github.io/index.html">
+    <meta name="description" content="步骤间参数传递 将当前 step 的结果导出为Output Parameter 将前一个 step 的Output Parameter导入为当前步骤的Input Parameter  1234567891011121314151617181920212223242526272829303132333435363738apiVersion: argoproj.io&#x2F;v1alpha1kind: Wor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="argo workflows step之间传参">
+<meta property="og:url" content="https://dooubb.github.io/argo/argo-workflows-step-share-parameter/index.html">
 <meta property="og:site_name" content="doubao">
+<meta property="og:description" content="步骤间参数传递 将当前 step 的结果导出为Output Parameter 将前一个 step 的Output Parameter导入为当前步骤的Input Parameter  1234567891011121314151617181920212223242526272829303132333435363738apiVersion: argoproj.io&#x2F;v1alpha1kind: Wor">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-25T12:40:00.000Z">
+<meta property="article:modified_time" content="2024-08-25T12:40:00.000Z">
 <meta property="article:author" content="doubao">
+<meta property="article:tag" content="argo">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://dooubb.github.io/">
+<link rel="canonical" href="https://dooubb.github.io/argo/argo-workflows-step-share-parameter/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dooubb.github.io/argo/argo-workflows-step-share-parameter/","path":"argo/argo-workflows-step-share-parameter/","title":"argo workflows step之间传参"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>doubao</title>
+<title>argo workflows step之间传参 | doubao</title>
   
 
 
@@ -69,7 +74,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">doubao</h1>
+      <p class="site-title">doubao</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -122,7 +127,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -135,6 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E9%97%B4%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">1.</span> <span class="nav-text">步骤间参数传递</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E7%9A%84-result-%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">内置的 result 参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#script-%E7%9A%84%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">2.1.</span> <span class="nav-text">script 的运行结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%9A%84%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA"><span class="nav-number">2.2.</span> <span class="nav-text">容器的标准输出</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,16 +183,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/argo/argo-workflows-step-share-parameter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -200,13 +207,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
+      <meta itemprop="name" content="argo workflows step之间传参 | doubao">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/argo/argo-workflows-step-share-parameter/" class="post-title-link" itemprop="url">argo workflows step之间传参</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          argo workflows step之间传参
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -259,21 +266,28 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="步骤间参数传递"><a href="#步骤间参数传递" class="headerlink" title="步骤间参数传递"></a>步骤间参数传递</h1><ul>
+    <div class="post-body" itemprop="articleBody"><h1 id="步骤间参数传递"><a href="#步骤间参数传递" class="headerlink" title="步骤间参数传递"></a>步骤间参数传递</h1><ul>
 <li>将当前 step 的结果导出为<code>Output Parameter</code></li>
 <li>将前一个 step 的<code>Output Parameter</code>导入为当前步骤的<code>Input Parameter</code></li>
 </ul>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">argoproj.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Workflow</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">generateName:</span> <span class="string">output-parameter-</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">entrypoint:</span> <span class="string">output-parameter</span></span><br><span class="line">  <span class="attr">templates:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">output-parameter</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">generate-parameter</span></span><br><span class="line">        <span class="attr">template:</span> <span class="string">hello-world-to-file</span></span><br><span class="line">    <span class="bullet">-</span> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">consume-parameter</span></span><br><span class="line">        <span class="attr">template:</span> <span class="string">print-message</span></span><br><span class="line">        <span class="attr">arguments:</span></span><br><span class="line">          <span class="attr">parameters:</span></span><br><span class="line">          <span class="comment"># 将第一步写入到文件中的信息读取出来，传递给下一个步骤</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">message</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123;steps.generate-parameter.outputs.parameters.hello-param&#125;&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">hello-world-to-file</span></span><br><span class="line">    <span class="attr">container:</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">      <span class="attr">command:</span> [<span class="string">sh</span>, <span class="string">-c</span>]</span><br><span class="line">      <span class="attr">args:</span> [<span class="string">&quot;echo -n Output And Input Test &gt; /tmp/hello_world.txt&quot;</span>]  <span class="comment"># 将信息输出到文件中</span></span><br><span class="line">    <span class="attr">outputs:</span></span><br><span class="line">      <span class="attr">parameters:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">hello-param</span>  <span class="comment"># name of output parameter</span></span><br><span class="line">        <span class="attr">valueFrom:</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">/tmp/hello_world.txt</span> <span class="comment"># set the value of hello-param to the contents of this hello-world.txt</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">print-message</span></span><br><span class="line">    <span class="attr">inputs:</span></span><br><span class="line">      <span class="attr">parameters:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">message</span></span><br><span class="line">    <span class="attr">container:</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">      <span class="attr">command:</span> [<span class="string">echo</span>]</span><br><span class="line">      <span class="attr">args:</span> [<span class="string">&quot;<span class="template-variable">&#123;&#123;inputs.parameters.message&#125;&#125;</span>&quot;</span>]</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/argo/argo-workflows-step-share-parameter/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+
+<span id="more"></span>
+
+<p>在<code>arguments.parameters</code>中直接引用了之前步骤的<code>Output Parameter</code>，语法为 <code>&#123;&#123;steps.$stepName.outputs.parameters.$parameterName&#125;&#125;</code>。</p>
+<h1 id="内置的-result-参数"><a href="#内置的-result-参数" class="headerlink" title="内置的 result 参数"></a>内置的 result 参数</h1><p>除了手动导出的参数之外，<code>ArgoWorkflow</code>还会默认生成一个<code>Output Parameter</code>，就是<code>result</code>。和其他<code>Output Parameter</code>一样，可以通过 <code>&#123;&#123;steps.$stepName.outputs.parameters.$parameterName&#125;&#125;</code> 语法进行引用。这个<code>result</code>参数会捕获最大<code>256KB</code>的标准输出作为<code>value</code>。</p>
+<p>因此<code>result</code>包含以下内容：</p>
+<ul>
+<li>1）script 的运行结果</li>
+<li>2）容器的标准输出</li>
+</ul>
+<p>只要是在容器中输出到标准输出的，内容都可以被<code>result</code>捕获。</p>
+<h2 id="script-的运行结果"><a href="#script-的运行结果" class="headerlink" title="script 的运行结果"></a>script 的运行结果</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">argoproj.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Workflow</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">generateName:</span> <span class="string">scripts-bash-</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">entrypoint:</span> <span class="string">bash-script-example</span></span><br><span class="line">  <span class="attr">templates:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">bash-script-example</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">generate</span></span><br><span class="line">        <span class="attr">template:</span> <span class="string">gen-random-int-python</span></span><br><span class="line">    <span class="bullet">-</span> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">print</span></span><br><span class="line">        <span class="attr">template:</span> <span class="string">print-message</span></span><br><span class="line">        <span class="attr">arguments:</span></span><br><span class="line">          <span class="attr">parameters:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">message</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123;steps.generate.outputs.result&#125;&#125;</span>&quot;</span>  <span class="comment"># 这里会将pythond的print信息收集，然后传递给下一个步骤作为输入信息</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">gen-random-int-python</span></span><br><span class="line">    <span class="attr">script:</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">python:alpine3.6</span></span><br><span class="line">      <span class="attr">command:</span> [<span class="string">python</span>]</span><br><span class="line">      <span class="attr">source:</span> <span class="string">|</span></span><br><span class="line"><span class="string">        import random</span></span><br><span class="line"><span class="string">        i = random.randint(1, 100)</span></span><br><span class="line"><span class="string">        print(i)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">print-message</span></span><br><span class="line">    <span class="attr">inputs:</span></span><br><span class="line">      <span class="attr">parameters:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">message</span></span><br><span class="line">    <span class="attr">container:</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">alpine:latest</span></span><br><span class="line">      <span class="attr">command:</span> [<span class="string">sh</span>, <span class="string">-c</span>]</span><br><span class="line">      <span class="attr">args:</span> [<span class="string">&quot;echo result was: <span class="template-variable">&#123;&#123;inputs.parameters.message&#125;&#125;</span>&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="容器的标准输出"><a href="#容器的标准输出" class="headerlink" title="容器的标准输出"></a>容器的标准输出</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">argoproj.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Workflow</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">generateName:</span> <span class="string">scripts-bash-</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">entrypoint:</span> <span class="string">bash-script-example</span></span><br><span class="line">  <span class="attr">templates:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">bash-script-example</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">generate</span></span><br><span class="line">        <span class="attr">template:</span> <span class="string">whalesay-logs</span></span><br><span class="line">    <span class="bullet">-</span> <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">print</span></span><br><span class="line">        <span class="attr">template:</span> <span class="string">print-message</span></span><br><span class="line">        <span class="attr">arguments:</span></span><br><span class="line">          <span class="attr">parameters:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">message</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">&quot;<span class="template-variable">&#123;&#123;steps.generate.outputs.result&#125;&#125;</span>&quot;</span> <span class="comment">#将whalesay容器打印在控制台的logs收集并传递给下一个步骤作为输入</span></span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">whalesay-logs</span></span><br><span class="line">    <span class="attr">container:</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">docker/whalesay</span></span><br><span class="line">      <span class="attr">command:</span> [<span class="string">sh</span>, <span class="string">-c</span>]</span><br><span class="line">      <span class="attr">args:</span> [<span class="string">&quot;cowsay test container logs&quot;</span>]</span><br><span class="line"></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">print-message</span></span><br><span class="line">    <span class="attr">inputs:</span></span><br><span class="line">      <span class="attr">parameters:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">message</span></span><br><span class="line">    <span class="attr">container:</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">alpine:latest</span></span><br><span class="line">      <span class="attr">command:</span> [<span class="string">sh</span>, <span class="string">-c</span>]</span><br><span class="line">      <span class="attr">args:</span> [<span class="string">&#x27;echo result was: &quot;<span class="template-variable">&#123;&#123;inputs.parameters.message&#125;&#125;</span>&quot;&#x27;</span>] <span class="comment">#特殊处理上面容器打印的换行log信息</span></span><br></pre></td></tr></table></figure>
+
+<p>相关具体信息见，<a target="_blank" rel="noopener" href="https://argo-workflows.readthedocs.io/en/latest/walk-through/output-parameters/">官方文档链接</a></p>
+
     </div>
 
     
@@ -281,243 +295,21 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          <div class="post-tags">
+              <a href="/tags/argo/" rel="tag"># argo</a>
+          </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/argo/argo-workflows-trigger-mode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/argo/argo-workflows-trigger-mode/" class="post-title-link" itemprop="url">argo workflows触发方式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-25 20:30:00" itemprop="dateCreated datePublished" datetime="2024-08-25T20:30:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-25 20:30:00" itemprop="dateModified" datetime="2024-08-25T20:30:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
         
-          <a href="/categories/argo/" itemprop="url" rel="index"><span itemprop="name">argo</span></a>
-        </span>
-    </span>
 
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="定时触发"><a href="#定时触发" class="headerlink" title="定时触发"></a>定时触发</h1><p>类似于 k8s 中的 job 和 cronjob，CronWorkflow 会定时创建 Workflow 来实现定时触发。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">argoproj.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CronWorkflow</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test-cron</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">workflowMetadata:</span> <span class="comment">#元数据，由这个CronWorkflow创建的Workflow都会带有这个labels</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">      <span class="attr">dou:</span> <span class="string">bao</span></span><br><span class="line">  <span class="attr">schedule:</span> <span class="string">&quot;* * * * *&quot;</span></span><br><span class="line">  <span class="attr">concurrencyPolicy:</span> <span class="string">&quot;Replace&quot;</span></span><br><span class="line">  <span class="attr">startingDeadlineSeconds:</span> <span class="number">0</span></span><br><span class="line">  <span class="attr">serviceAccountName:</span> <span class="string">argo</span></span><br><span class="line">  <span class="attr">workflowSpec:</span></span><br><span class="line">    <span class="attr">entrypoint:</span> <span class="string">whalesay</span></span><br><span class="line">    <span class="attr">templates:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">whalesay</span></span><br><span class="line">      <span class="attr">inputs:</span></span><br><span class="line">        <span class="attr">parameters:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">message</span> <span class="comment">#模板的输入参数</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">cron-test</span></span><br><span class="line">      <span class="attr">container:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">docker/whalesay</span></span><br><span class="line">        <span class="attr">command:</span> [<span class="string">cowsay</span>]</span><br><span class="line">        <span class="attr">args:</span> [<span class="string">&quot;<span class="template-variable">&#123;&#123;inputs.parameters.message&#125;&#125;</span>&quot;</span>]	<span class="comment">#引用模板的入参</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/argo/argo-workflows-trigger-mode/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/argo/argo-workflows-trigger-mode/" rel="prev" title="argo workflows触发方式">
+                  <i class="fa fa-angle-left"></i> argo workflows触发方式
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/argo/argo-workflows-template/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/argo/argo-workflows-template/" class="post-title-link" itemprop="url">argo workflows template</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-25 20:20:00" itemprop="dateCreated datePublished" datetime="2024-08-25T20:20:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-25 20:20:00" itemprop="dateModified" datetime="2024-08-25T20:20:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        
-          <a href="/categories/argo/" itemprop="url" rel="index"><span itemprop="name">argo</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="argo-workflow-template"><a href="#argo-workflow-template" class="headerlink" title="argo workflow &amp; template"></a>argo workflow &amp; template</h1><h2 id="Workflow-的相关类型"><a href="#Workflow-的相关类型" class="headerlink" title="Workflow 的相关类型"></a>Workflow 的相关类型</h2><h3 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h3><ul>
-<li><strong>定义</strong>: 是一个具体的工作流实例，描述了要执行的任务和步骤。</li>
-<li><strong>使用</strong>: 可以直接包含 <code>templates</code>，或者引用 <code>WorkflowTemplate</code> 和 <code>ClusterWorkflowTemplate</code>。</li>
-</ul>
-<h3 id="WorkflowTemplate"><a href="#WorkflowTemplate" class="headerlink" title="WorkflowTemplate"></a>WorkflowTemplate</h3><ul>
-<li><strong>定义</strong>: 是一个可重用的工作流模板，适用于同一命名空间内的多个工作流。</li>
-<li><strong>使用</strong>: <code>Workflow</code> 可以引用 <code>WorkflowTemplate</code> 以使用其定义的步骤和任务。</li>
-</ul>
-<h3 id="ClusterWorkflowTemplate"><a href="#ClusterWorkflowTemplate" class="headerlink" title="ClusterWorkflowTemplate"></a>ClusterWorkflowTemplate</h3><ul>
-<li><strong>定义</strong>: 与 <code>WorkflowTemplate</code> 类似，但在集群范围内可用，适用于跨命名空间的工作流。</li>
-<li><strong>使用</strong>: <code>Workflow</code> 可以引用 <code>ClusterWorkflowTemplate</code>，这使得模板在所有命名空间中都可用。</li>
-</ul>
-<h3 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h3><ul>
-<li><strong>定义</strong>: 是工作流中定义的实际可执行单元，可以是单个任务、步骤或 DAG。</li>
-<li><strong>使用</strong>: 定义在 <code>Workflow</code>、<code>WorkflowTemplate</code> 或 <code>ClusterWorkflowTemplate</code> 中。<code>templates</code> 可以相互引用，支持复用和组合。</li>
-</ul>
-<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><ul>
-<li><strong>Workflow</strong> 可以包含 <code>templates</code> 直接执行，也可以引用 <code>WorkflowTemplate</code> 或 <code>ClusterWorkflowTemplate</code>。</li>
-<li><strong>WorkflowTemplate</strong> 和 <strong>ClusterWorkflowTemplate</strong> 提供了复用和参数化的能力，使得工作流定义更加灵活和可维护。</li>
-<li><strong>Templates</strong> 是工作流各组件的基本构建块，定义了具体的执行逻辑。</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/argo/argo-workflows-template/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+            <div class="post-nav-item">
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+          </div>
     </footer>
   </article>
 </div>
@@ -525,9 +317,7 @@
 
 
 
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+
 
 </div>
   </main>
