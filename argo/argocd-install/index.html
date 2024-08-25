@@ -20,23 +20,34 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"dooubb.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"hide","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="doubao">
-<meta property="og:url" content="https://dooubb.github.io/index.html">
+    <meta name="description" content="安装部署新建命名空间并部署项目资源 12kubectl create namespace argocdkubectl apply -n argocd -f https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;argoproj&#x2F;argo-cd&#x2F;stable&#x2F;manifests&#x2F;install.yaml  暴露服务默认情况下， Argo CD 服务不对外暴露服务，可以通过 LoadBa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装argo cd">
+<meta property="og:url" content="https://dooubb.github.io/argo/argocd-install/index.html">
 <meta property="og:site_name" content="doubao">
+<meta property="og:description" content="安装部署新建命名空间并部署项目资源 12kubectl create namespace argocdkubectl apply -n argocd -f https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;argoproj&#x2F;argo-cd&#x2F;stable&#x2F;manifests&#x2F;install.yaml  暴露服务默认情况下， Argo CD 服务不对外暴露服务，可以通过 LoadBa">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dooubb.github.io/argo/argocd-install/image-20240708103122048.png">
+<meta property="og:image" content="https://dooubb.github.io/argo/argocd-install/image-20240825160336188.png">
+<meta property="og:image" content="https://dooubb.github.io/argo/argocd-install/image-20240825160538368.png">
+<meta property="og:image" content="https://dooubb.github.io/argo/argocd-install/image-20240825161747562.png">
+<meta property="og:image" content="https://dooubb.github.io/argo/argocd-install/image-20240825161830895.png">
+<meta property="article:published_time" content="2024-08-25T04:12:00.000Z">
+<meta property="article:modified_time" content="2024-08-24T16:00:00.000Z">
 <meta property="article:author" content="doubao">
+<meta property="article:tag" content="argo">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dooubb.github.io/argo/argocd-install/image-20240708103122048.png">
 
 
-<link rel="canonical" href="https://dooubb.github.io/">
+<link rel="canonical" href="https://dooubb.github.io/argo/argocd-install/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://dooubb.github.io/argo/argocd-install/","path":"argo/argocd-install/","title":"安装argo cd"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>doubao</title>
+<title>安装argo cd | doubao</title>
   
 
 
@@ -69,7 +80,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">doubao</h1>
+      <p class="site-title">doubao</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -122,7 +133,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -135,6 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">安装部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">暴露服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE-UI"><span class="nav-number">3.</span> <span class="nav-text">访问 UI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-git-%E4%BB%93%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">添加 git 仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-app"><span class="nav-number">5.</span> <span class="nav-text">添加 app</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-argo-cli-%E5%88%9B%E5%BB%BA"><span class="nav-number">5.1.</span> <span class="nav-text">使用 argo cli 创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-yaml-%E5%88%9B%E5%BB%BA"><span class="nav-number">5.2.</span> <span class="nav-text">使用 yaml 创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-ui-%E5%88%9B%E5%BB%BA"><span class="nav-number">5.3.</span> <span class="nav-text">使用 ui 创建</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%90%8C%E6%AD%A5-gitlab-%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">手动同步 gitlab 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E5%92%8C%E5%9B%9E%E6%BB%9A"><span class="nav-number">7.</span> <span class="nav-text">发布和回滚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE"><span class="nav-number">8.</span> <span class="nav-text">自定义配置</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -177,135 +189,17 @@
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/k8s/kustomization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/k8s/kustomization/" class="post-title-link" itemprop="url">kustomization的使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-25 12:22:00" itemprop="dateCreated datePublished" datetime="2024-08-25T12:22:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-25 00:00:00" itemprop="dateModified" datetime="2024-08-25T00:00:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        
-          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="安装-kustomize-命令"><a href="#安装-kustomize-命令" class="headerlink" title="安装 kustomize 命令"></a>安装 kustomize 命令</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v5.4.3/kustomize_v5.4.3_linux_amd64.tar.gz &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">tar -xzvf kustomize_v5.4.3_linux_amd64.tar.gz -C /usr/local/bin/ &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"><span class="built_in">chmod</span> +x /usr/local/bin/kustomize</span><br></pre></td></tr></table></figure>
-
-<h1 id="kustomization"><a href="#kustomization" class="headerlink" title="kustomization"></a>kustomization</h1><p>kustomize 是一个通过 kustomization 文件定制 kubernetes 对象的工具，它可以通过一些资源生成一些新的资源，也可以定制不同的资源的集合。</p>
-<h2 id="kustomization-常见目录布局"><a href="#kustomization-常见目录布局" class="headerlink" title="kustomization 常见目录布局"></a>kustomization 常见目录布局</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">├──</span> <span class="string">base</span></span><br><span class="line"><span class="string">│</span>   <span class="string">├──</span> <span class="string">deployment.yaml</span></span><br><span class="line"><span class="string">│</span>   <span class="string">├──</span> <span class="string">kustomization.yaml</span></span><br><span class="line"><span class="string">│</span>   <span class="string">└──</span> <span class="string">service.yaml</span></span><br><span class="line"><span class="string">└──</span> <span class="string">overlays</span></span><br><span class="line">    <span class="string">├──</span> <span class="string">dev</span></span><br><span class="line">    <span class="string">│</span>   <span class="string">├──</span> <span class="string">kustomization.yaml</span></span><br><span class="line">    <span class="string">│</span>   <span class="string">└──</span> <span class="string">patch.yaml</span></span><br><span class="line">    <span class="string">├──</span> <span class="string">prod</span></span><br><span class="line">    <span class="string">│</span>   <span class="string">├──</span> <span class="string">kustomization.yaml</span></span><br><span class="line">    <span class="string">│</span>   <span class="string">└──</span> <span class="string">patch.yaml</span></span><br><span class="line">    <span class="string">└──</span> <span class="string">staging</span></span><br><span class="line">        <span class="string">├──</span> <span class="string">kustomization.yaml</span></span><br><span class="line">        <span class="string">└──</span> <span class="string">patch.yaml</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p><code>/bases</code>目录保存的是基本的配置</p>
-</li>
-<li><p><code>/overlays</code>【此文件夹也可以省略】里放置的不同环境的配置，例如 <code>/dev</code>、<code>/staging</code>，<code>/prod</code>这些就是不同环境的配置，</p>
-</li>
-<li><p><code>/base</code>等文件夹下都有一个 kustomization .yml 文件，用于配置。</p>
-</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/k8s/kustomization/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/argo/argocd-install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -319,13 +213,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
+      <meta itemprop="name" content="安装argo cd | doubao">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/argo/argocd-install/" class="post-title-link" itemprop="url">安装argo cd</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          安装argo cd
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -378,8 +272,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><p>新建命名空间并部署项目资源</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><p>新建命名空间并部署项目资源</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create namespace argocd</span><br><span class="line">kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml</span><br></pre></td></tr></table></figure>
 
 <h2 id="暴露服务"><a href="#暴露服务" class="headerlink" title="暴露服务"></a>暴露服务</h2><p>默认情况下， Argo CD 服务不对外暴露服务，可以通过 LoadBalancer 或者 NodePort 类型的 Service、Ingress、Kubectl 端口转发等方式将 Argo CD 服务发布到 Kubernetes 集群外部。</p>
@@ -388,15 +281,27 @@
 
 <p>查看随机暴露的端口</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@devops:~# kubectl get svc -n argocd</span><br><span class="line">NAME                                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE</span><br><span class="line">argocd-applicationset-controller          ClusterIP   10.43.49.182    &lt;none&gt;        7000/TCP,8080/TCP            78m</span><br><span class="line">argocd-dex-server                         ClusterIP   10.43.155.32    &lt;none&gt;        5556/TCP,5557/TCP,5558/TCP   78m</span><br><span class="line">argocd-metrics                            ClusterIP   10.43.241.106   &lt;none&gt;        8082/TCP                     78m</span><br><span class="line">argocd-notifications-controller-metrics   ClusterIP   10.43.239.240   &lt;none&gt;        9001/TCP                     78m</span><br><span class="line">argocd-redis                              ClusterIP   10.43.37.52     &lt;none&gt;        6379/TCP                     78m</span><br><span class="line">argocd-repo-server                        ClusterIP   10.43.79.21     &lt;none&gt;        8081/TCP,8084/TCP            78m</span><br><span class="line">argocd-server                             NodePort    10.43.65.157    &lt;none&gt;        80:32221/TCP,443:31046/TCP   78m</span><br><span class="line">argocd-server-metrics                     ClusterIP   10.43.235.50    &lt;none&gt;        8083/TCP                     78m</span><br><span class="line">root@devops:~#</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/argo/argocd-install/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+
+<span id="more"></span>
+
+<h2 id="访问-UI"><a href="#访问-UI" class="headerlink" title="访问 UI"></a>访问 UI</h2><p>使用 node:31046 访问</p>
+<p><img src="/argo/argocd-install/image-20240708103122048.png" alt="image-20240708103122048"></p>
+<h2 id="添加-git-仓库"><a href="#添加-git-仓库" class="headerlink" title="添加 git 仓库"></a>添加 git 仓库</h2><p>因为本机 vm 访问 git 不通，所以选择 gitlab，使用 ui 添加也可以使用命令行添加</p>
+<p><img src="/argo/argocd-install/image-20240825160336188.png" alt="image-20240825160336188.png"></p>
+<h2 id="添加-app"><a href="#添加-app" class="headerlink" title="添加 app"></a>添加 app</h2><h3 id="使用-argo-cli-创建"><a href="#使用-argo-cli-创建" class="headerlink" title="使用 argo cli 创建"></a>使用 argo cli 创建</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">argocd app create myapp \</span><br><span class="line">--repo https://gitlab.com/doubao2/doubao.git \</span><br><span class="line">--path nginx --dest-server \</span><br><span class="line">https://kubernetes.default.svc \</span><br><span class="line">--dest-namespace doubao</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-yaml-创建"><a href="#使用-yaml-创建" class="headerlink" title="使用 yaml 创建"></a>使用 yaml 创建</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">argoproj.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Application</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">argocd</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">destination:</span></span><br><span class="line">    <span class="attr">namespace:</span> <span class="string">doubao</span> <span class="comment"># 部署应用的命名空间</span></span><br><span class="line">    <span class="attr">server:</span> <span class="string">https://kubernetes.default.svc</span> <span class="comment"># API Server 地址</span></span><br><span class="line">  <span class="attr">project:</span> <span class="string">default</span> <span class="comment"># 项目名</span></span><br><span class="line">  <span class="attr">source:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">nginx</span> <span class="comment"># 资源文件路径</span></span><br><span class="line">    <span class="attr">repoURL:</span> <span class="string">https://gitlab.com/douba0/argo-cd-poc.git</span> <span class="comment"># Git 仓库地址</span></span><br><span class="line">    <span class="attr">targetRevision:</span> <span class="string">main</span> <span class="comment"># 分支名</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-ui-创建"><a href="#使用-ui-创建" class="headerlink" title="使用 ui 创建"></a>使用 ui 创建</h3><p>添加对应的参数<br><img src="/argo/argocd-install/image-20240825160538368.png" alt="image-20240825160538368.png"></p>
+<h2 id="手动同步-gitlab-配置"><a href="#手动同步-gitlab-配置" class="headerlink" title="手动同步 gitlab 配置"></a>手动同步 gitlab 配置</h2><p><img src="/argo/argocd-install/image-20240825161747562.png" alt="argocd-install/image-20240825161747562.png"></p>
+<h2 id="发布和回滚"><a href="#发布和回滚" class="headerlink" title="发布和回滚"></a>发布和回滚</h2><p>手动同步 gitlab 配置后，可以看到详细的部署信息，并且可以进行版本的发布和回滚的管理</p>
+<p><img src="/argo/argocd-install/image-20240825161830895.png" alt="image-20240825161830895.png"></p>
+<h2 id="自定义配置"><a href="#自定义配置" class="headerlink" title="自定义配置"></a>自定义配置</h2><p>Argocd 在自动部署的时候，会自动给资源添加 labels。默认值是<code>app.kubernetes.io/instance: $name</code>，可以在 argocd-cm 中设置 labels 的 key。</p>
+<p><a target="_blank" rel="noopener" href="https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-cm-yaml/https://argo-cd.readthedocs.io/en/stable/operator-manual/argocd-cm-yaml/">argocd-cm 官方样例</a></p>
+<p>由于自动添加 labels 会导致 Kustomization 编排的资源会被覆盖 labels，这样会导致不同 app 引用相同的 configmap 后，会出现 OutOfSync 的问题。</p>
+<p>由于目前没有禁止自动添加 labels 的功能和配置，但是可以自定义忽略不同的资源信息。所以曲线救国可以直接忽略掉这个 labels 的变更，这样 argocd 在 sync 后就不会出现 OutOfSync 了。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/name:</span> <span class="string">argocd-cm</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/part-of:</span> <span class="string">argocd</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">argocd-cm</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">argocd</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">resource.customizations.ignoreDifferences.all:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    managedFieldsManagers:</span></span><br><span class="line"><span class="string">    - kube-controller-manager</span></span><br><span class="line"><span class="string">    jsonPointers:</span></span><br><span class="line"><span class="string">    - /metadata/labels/app.kubernetes.io~1instance</span></span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -404,119 +309,24 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          <div class="post-tags">
+              <a href="/tags/argo/" rel="tag"># argo</a>
+          </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://dooubb.github.io/k8s/rancher-install-mini-k8s/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/k8s/rancher-install-mini-k8s/" class="post-title-link" itemprop="url">rancher管理k8s</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-25 12:00:00" itemprop="dateCreated datePublished" datetime="2024-08-25T12:00:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-25 00:00:00" itemprop="dateModified" datetime="2024-08-25T00:00:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
         
-          <a href="/categories/k8s/" itemprop="url" rel="index"><span itemprop="name">k8s</span></a>
-        </span>
-    </span>
 
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="初始化-rke2-集群"><a href="#初始化-rke2-集群" class="headerlink" title="初始化 rke2 集群"></a>初始化 rke2 集群</h1><h2 id="新建-4-台-Ubuntu24"><a href="#新建-4-台-Ubuntu24" class="headerlink" title="新建 4 台 Ubuntu24"></a>新建 4 台 Ubuntu24</h2><p>设置每台 vm 的 hostname</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname master-node</span><br><span class="line">hostnamectl set-hostname worker-node-01</span><br><span class="line">hostnamectl set-hostname worker-node-02</span><br><span class="line">hostnamectl set-hostname devops</span><br></pre></td></tr></table></figure>
-
-<p>由于 vm 是复制出来的，需要重新生成机器码并重启</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf /etc/machine-id</span><br><span class="line">systemd-machine-id-setup</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/k8s/rancher-install-mini-k8s/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/k8s/rancher-install-mini-k8s/" rel="prev" title="rancher管理k8s">
+                  <i class="fa fa-angle-left"></i> rancher管理k8s
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+            <div class="post-nav-item">
+                <a href="/k8s/kustomization/" rel="next" title="kustomization的使用">
+                  kustomization的使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
@@ -524,9 +334,7 @@
 
 
 
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+
 
 </div>
   </main>
