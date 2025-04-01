@@ -14,7 +14,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.GITLAB_RSA_PRIVATE_KEY }}
         with:
           # 注意替换为你的 GitHub 源仓库地址
-          source-repo: git@github.com:dobuns/doubao.git
+          source-repo: git@github.com:doubuns/doubao.git
           # 注意替换为你的 gitlab 目标仓库地址
-          destination-repo: git@gitlab.com:dobuns/doubao.git
+          destination-repo: git@gitlab.com:doubuns/doubao.git
 
