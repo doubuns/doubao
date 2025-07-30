@@ -147,7 +147,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -178,6 +178,133 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://doubuns.github.io/argo/argo-workflows-template/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doubao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doubao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | doubao">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/argo/argo-workflows-template/" class="post-title-link" itemprop="url">argo workflows template</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-25 20:20:00" itemprop="dateCreated datePublished" datetime="2024-08-25T20:20:00+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-25 20:20:00" itemprop="dateModified" datetime="2024-08-25T20:20:00+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        
+          <a href="/categories/argo/" itemprop="url" rel="index"><span itemprop="name">argo</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="argo-workflow-template"><a href="#argo-workflow-template" class="headerlink" title="argo workflow &amp; template"></a>argo workflow &amp; template</h1><h2 id="Workflow-的相关类型"><a href="#Workflow-的相关类型" class="headerlink" title="Workflow 的相关类型"></a>Workflow 的相关类型</h2><h3 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h3><ul>
+<li><strong>定义</strong>: 是一个具体的工作流实例，描述了要执行的任务和步骤。</li>
+<li><strong>使用</strong>: 可以直接包含 <code>templates</code>，或者引用 <code>WorkflowTemplate</code> 和 <code>ClusterWorkflowTemplate</code>。</li>
+</ul>
+<h3 id="WorkflowTemplate"><a href="#WorkflowTemplate" class="headerlink" title="WorkflowTemplate"></a>WorkflowTemplate</h3><ul>
+<li><strong>定义</strong>: 是一个可重用的工作流模板，适用于同一命名空间内的多个工作流。</li>
+<li><strong>使用</strong>: <code>Workflow</code> 可以引用 <code>WorkflowTemplate</code> 以使用其定义的步骤和任务。</li>
+</ul>
+<h3 id="ClusterWorkflowTemplate"><a href="#ClusterWorkflowTemplate" class="headerlink" title="ClusterWorkflowTemplate"></a>ClusterWorkflowTemplate</h3><ul>
+<li><strong>定义</strong>: 与 <code>WorkflowTemplate</code> 类似，但在集群范围内可用，适用于跨命名空间的工作流。</li>
+<li><strong>使用</strong>: <code>Workflow</code> 可以引用 <code>ClusterWorkflowTemplate</code>，这使得模板在所有命名空间中都可用。</li>
+</ul>
+<h3 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h3><ul>
+<li><strong>定义</strong>: 是工作流中定义的实际可执行单元，可以是单个任务、步骤或 DAG。</li>
+<li><strong>使用</strong>: 定义在 <code>Workflow</code>、<code>WorkflowTemplate</code> 或 <code>ClusterWorkflowTemplate</code> 中。<code>templates</code> 可以相互引用，支持复用和组合。</li>
+</ul>
+<h3 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h3><ul>
+<li><strong>Workflow</strong> 可以包含 <code>templates</code> 直接执行，也可以引用 <code>WorkflowTemplate</code> 或 <code>ClusterWorkflowTemplate</code>。</li>
+<li><strong>WorkflowTemplate</strong> 和 <strong>ClusterWorkflowTemplate</strong> 提供了复用和参数化的能力，使得工作流定义更加灵活和可维护。</li>
+<li><strong>Templates</strong> 是工作流各组件的基本构建块，定义了具体的执行逻辑。</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/argo/argo-workflows-template/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -383,117 +510,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/argo/sealed-secrets-install/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://doubuns.github.io/tools/tree-tools/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/tools/tree-tools/" class="post-title-link" itemprop="url">tree</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-25 19:07:00" itemprop="dateCreated datePublished" datetime="2024-08-25T19:07:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-25 00:00:00" itemprop="dateModified" datetime="2024-08-25T00:00:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        
-          <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="windows-下直接使用-tree"><a href="#windows-下直接使用-tree" class="headerlink" title="windows 下直接使用 tree"></a>windows 下直接使用 tree</h1><p><code>tree</code>可以显示目录结构，windows 下在 cmd 中可以直接使用，但是显示会有点瑕疵，不会直接显示子级目录前面的<code>---</code></p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tree</span> /F /A</span><br><span class="line"></span><br><span class="line">+---base</span><br><span class="line">|   +---config</span><br><span class="line">|   |       config.yaml</span><br><span class="line">|   |       kustomization.yaml</span><br><span class="line">|   |</span><br><span class="line">|   +---nginx</span><br><span class="line">|   |       hpa.yaml</span><br><span class="line">|   |       kustomization.yaml</span><br><span class="line">|   |       nginx.yaml</span><br><span class="line">|   |</span><br><span class="line">|   \---redis</span><br><span class="line">|           hpa.yaml</span><br><span class="line">|           kustomization.yaml</span><br><span class="line">|           redis.yaml</span><br></pre></td></tr></table></figure>
-
-<h1 id="git-中安装-tree-for-windows"><a href="#git-中安装-tree-for-windows" class="headerlink" title="git 中安装 tree for windows"></a>git 中安装 tree for windows</h1><p><a target="_blank" rel="noopener" href="https://gnuwin32.sourceforge.net/packages/tree.html">tree for windows</a>安装包。下载 Binaries，解压后将<code>tree.exe</code>复制到 git 的安装目录中的<code>D:\develop\Git\usr\bin</code>，新建 git bash</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tree -C -A</span><br><span class="line"></span><br><span class="line">├── config</span><br><span class="line">│   ├── config.yaml</span><br><span class="line">│   └── kustomization.yaml</span><br><span class="line">├── nginx</span><br><span class="line">│   ├── hpa.yaml</span><br><span class="line">│   ├── kustomization.yaml</span><br><span class="line">│   └── nginx.yaml</span><br><span class="line">└── redis</span><br><span class="line">    ├── hpa.yaml</span><br><span class="line">    ├── kustomization.yaml</span><br><span class="line">    └── redis.yaml</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/tools/tree-tools/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

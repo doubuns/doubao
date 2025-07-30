@@ -147,7 +147,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -178,6 +178,120 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://doubuns.github.io/docker/docker-containerd-runc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doubao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doubao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | doubao">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/docker/docker-containerd-runc/" class="post-title-link" itemprop="url">docker containerd runc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-24 21:40:00" itemprop="dateCreated datePublished" datetime="2024-08-24T21:40:00+08:00">2024-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-24 00:00:00" itemprop="dateModified" datetime="2024-08-24T00:00:00+08:00">2024-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        
+          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="OCI-Open-Container-Initiative"><a href="#OCI-Open-Container-Initiative" class="headerlink" title="OCI (Open Container Initiative)"></a>OCI (Open Container Initiative)</h1><p>OCI（Open Container Initiative）即开放的容器运行时<strong>规范</strong>，目的在于定义一个容器运行时及镜像的相关标准和规范，其中包括</p>
+<ul>
+<li>runtime-spec：容器的生命周期管理，具体参考<a target="_blank" rel="noopener" href="https://github.com/opencontainers/runtime-spec/blob/master/runtime.md">runtime-spec</a>。</li>
+<li>image-spec：镜像的生命周期管理，具体参考<a target="_blank" rel="noopener" href="https://github.com/opencontainers/image-spec/blob/main/spec.md">image-spec</a>。</li>
+</ul>
+<p>实现 OCI 标准的容器运行时有<code>runc</code>，<code>kata</code>等。</p>
+<h1 id="CRI-Container-Runtime-Interface"><a href="#CRI-Container-Runtime-Interface" class="headerlink" title="CRI (Container Runtime Interface)"></a>CRI (Container Runtime Interface)</h1><p><strong>CRI 即容器运行时接口，主要用来定义 k8s 与容器运行时的 API 调用</strong>，kubelet 通过 CRI 来调用容器运行时，只要实现了 CRI 接口的容器运行时就可以对接到 k8s 的 kubelet 组件。</p>
+<p><img src="/docker/docker-containerd-runc/image-20240818154100206.png" alt="image-20240818154100206"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/docker/docker-containerd-runc/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -382,115 +496,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/docker/buildkit/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://doubuns.github.io/docker/docker%20in%20docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/docker/docker%20in%20docker/" class="post-title-link" itemprop="url">Docker in Docker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-24 21:35:00" itemprop="dateCreated datePublished" datetime="2024-08-24T21:35:00+08:00">2024-08-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-24 00:00:00" itemprop="dateModified" datetime="2024-08-24T00:00:00+08:00">2024-08-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        
-          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Docker-in-Docker-DinD-深入解析"><a href="#Docker-in-Docker-DinD-深入解析" class="headerlink" title="Docker in Docker (DinD) 深入解析"></a>Docker in Docker (DinD) 深入解析</h1><p>Docker 技术在现代软件开发中已经成为一种标准，尤其是在微服务架构和持续集成&#x2F;持续部署（CI&#x2F;CD）流程中。随着 Docker 的普及，开发者们开始探索在容器内部运行 Docker 的能力，这种技术被称为 Docker in Docker（DinD）。</p>
-<h1 id="什么是-Docker-in-Docker？"><a href="#什么是-Docker-in-Docker？" class="headerlink" title="什么是 Docker in Docker？"></a>什么是 Docker in Docker？</h1><p>Docker in Docker 是指在一个 Docker 容器内部运行 Docker 守护进程的技术。这意味着你可以在一个容器中创建、管理和操作其他 Docker 容器。这种模式通常用于 CI&#x2F;CD 流程中，允许在隔离环境中构建和测试应用程序。</p>
-<h2 id="DinD-的实现方式"><a href="#DinD-的实现方式" class="headerlink" title="DinD 的实现方式"></a>DinD 的实现方式</h2><h3 id="1-直接挂载-Docker-sock"><a href="#1-直接挂载-Docker-sock" class="headerlink" title="1. 直接挂载 Docker.sock"></a>1. 直接挂载 Docker.sock</h3><p>最简单的实现方式是将宿主机的 Docker 套接字（<code>/var/run/docker.sock</code>）挂载到容器中，这样容器内的应用可以直接与宿主机的 Docker 守护进程进行交互。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/docker/docker%20in%20docker/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
