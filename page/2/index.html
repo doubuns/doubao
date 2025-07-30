@@ -147,7 +147,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -178,6 +178,114 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://doubuns.github.io/argo/argo-workflows-trigger-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doubao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doubao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | doubao">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/argo/argo-workflows-trigger-mode/" class="post-title-link" itemprop="url">argo workflows触发方式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-08-25 20:30:00" itemprop="dateCreated datePublished" datetime="2024-08-25T20:30:00+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-08-25 20:30:00" itemprop="dateModified" datetime="2024-08-25T20:30:00+08:00">2024-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+        
+          <a href="/categories/argo/" itemprop="url" rel="index"><span itemprop="name">argo</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="定时触发"><a href="#定时触发" class="headerlink" title="定时触发"></a>定时触发</h1><p>类似于 k8s 中的 job 和 cronjob，CronWorkflow 会定时创建 Workflow 来实现定时触发。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">argoproj.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">CronWorkflow</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">test-cron</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">workflowMetadata:</span> <span class="comment">#元数据，由这个CronWorkflow创建的Workflow都会带有这个labels</span></span><br><span class="line">    <span class="attr">labels:</span></span><br><span class="line">      <span class="attr">dou:</span> <span class="string">bao</span></span><br><span class="line">  <span class="attr">schedule:</span> <span class="string">&quot;* * * * *&quot;</span></span><br><span class="line">  <span class="attr">concurrencyPolicy:</span> <span class="string">&quot;Replace&quot;</span></span><br><span class="line">  <span class="attr">startingDeadlineSeconds:</span> <span class="number">0</span></span><br><span class="line">  <span class="attr">serviceAccountName:</span> <span class="string">argo</span></span><br><span class="line">  <span class="attr">workflowSpec:</span></span><br><span class="line">    <span class="attr">entrypoint:</span> <span class="string">whalesay</span></span><br><span class="line">    <span class="attr">templates:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">whalesay</span></span><br><span class="line">      <span class="attr">inputs:</span></span><br><span class="line">        <span class="attr">parameters:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">message</span> <span class="comment">#模板的输入参数</span></span><br><span class="line">            <span class="attr">value:</span> <span class="string">cron-test</span></span><br><span class="line">      <span class="attr">container:</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">docker/whalesay</span></span><br><span class="line">        <span class="attr">command:</span> [<span class="string">cowsay</span>]</span><br><span class="line">        <span class="attr">args:</span> [<span class="string">&quot;<span class="template-variable">&#123;&#123;inputs.parameters.message&#125;&#125;</span>&quot;</span>]	<span class="comment">#引用模板的入参</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/argo/argo-workflows-trigger-mode/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -399,117 +507,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/argo/argo-workflows-quick-start/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://doubuns.github.io/argo/sealed-secrets-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="doubao">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="doubao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | doubao">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/argo/sealed-secrets-install/" class="post-title-link" itemprop="url">sealed-secrets</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-08-25 19:40:00" itemprop="dateCreated datePublished" datetime="2024-08-25T19:40:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-08-25 00:00:00" itemprop="dateModified" datetime="2024-08-25T00:00:00+08:00">2024-08-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-        
-          <a href="/categories/argo/" itemprop="url" rel="index"><span itemprop="name">argo</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="安装-Controller"><a href="#安装-Controller" class="headerlink" title="安装 Controller"></a>安装 Controller</h1><p>部署项目资源</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.0/controller.yaml</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装二进制命令"><a href="#安装二进制命令" class="headerlink" title="安装二进制命令"></a>安装二进制命令</h1><p>安装目前最新版本<code>0.27.1</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KUBESEAL_VERSION=<span class="string">&#x27;0.27.1&#x27;</span> <span class="comment"># Set this to, for example, KUBESEAL_VERSION=&#x27;0.23.0&#x27;</span></span><br><span class="line">curl -OL <span class="string">&quot;https://github.com/bitnami-labs/sealed-secrets/releases/download/v<span class="variable">$&#123;KUBESEAL_VERSION:?&#125;</span>/kubeseal-<span class="variable">$&#123;KUBESEAL_VERSION:?&#125;</span>-linux-amd64.tar.gz&quot;</span></span><br><span class="line">tar -xvzf kubeseal-<span class="variable">$&#123;KUBESEAL_VERSION:?&#125;</span>-linux-amd64.tar.gz kubeseal</span><br><span class="line"><span class="built_in">sudo</span> install -m 755 kubeseal /usr/local/bin/kubeseal</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/argo/sealed-secrets-install/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

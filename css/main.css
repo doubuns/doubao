@@ -1243,7 +1243,7 @@ pre code {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #e095f5;
+  background: #609475;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -2742,6 +2742,42 @@ header.header {
 }
 .sub-menu .menu-item {
   display: inline-block;
+}
+@font-face {
+  font-family: 'LXGWWenKai';
+  src: url("/fonts/LXGWWenKai-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+body {
+  font-family: 'LXGWWenKai', 'Noto Serif SC', 'Microsoft YaHei', sans-serif;
+}
+.post-body {
+  font-family: 'LXGWWenKai', 'Noto Serif SC', 'Microsoft YaHei', sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.post-title,
+.post-title a,
+.post-header,
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+  font-family: 'LXGWWenKai', sans-serif !important;
+}
+.post-title,
+.post-meta,
+.post-meta span,
+.post-meta time,
+.post-header,
+.post-header span {
+  font-family: 'LXGWWenKai', sans-serif !important;
 }
 code {
 /* Customize inline code styles here */
